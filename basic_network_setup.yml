@@ -1,0 +1,45 @@
+- name: Basic Network Setup
+  hosts: routers
+  vars:
+    strong_password: "telecomS144"
+
+  tasks:
+    - name: Set unique hostnames
+      ios_config:
+        lines:
+          - "hostname {{ inventory_hostname }}"
+      register: hostname_changed
+
+    - name: Configure strong local passwords
+      ios_config:
+        lines:
+          - "enable secret {{ strong_password }}"
+          - "username admin secret {{ strong_password }}"
+      when: hostname_changed.changed
+
+    - name: Configure SSH and disable Telnet
+      ios_config:
+        lines:
+          - "line vty 0 15"
+          - "transport input ssh"
+          - "no transport input telnet"
+      when: hostname_changed.changed
+
+    - name: Configure console and VTY access limitations
+      ios_config:
+        lines:
+          - "line con 0"
+          - "logging synchronous"
+          - "exec-timeout 5 0"
+          - "line vty 0 15"
+          - "access-class 23 in"
+          - "transport input ssh"
+          - "login local"
+      when: hostname_changed.changed
+
+    - name: Configure logging and timestamps
+      ios_config:
+        lines:
+          - "service timestamps debug datetime msec"
+          - "service timestamps log datetime msec"
+      when: hostname_changed.changed
