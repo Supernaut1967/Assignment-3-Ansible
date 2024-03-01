@@ -1,8 +1,5 @@
 - name: Basic Network Setup
-  hosts:
-    - R1
-    - R2
-    - R3
+  hosts: routers
   vars:
     strong_password: "telecomS144"
 
