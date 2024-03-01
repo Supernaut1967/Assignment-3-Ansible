@@ -1,17 +1,16 @@
 ---
 
-- name: Roting Protocol OSPF Configuration
-  hosts: 
+- name: Routing Protocol OSPF Configuration
+  hosts: routers
   tasks:
     - name: Configure OSPF
+    include_vars: hosts.yml
       ios_config:
         lines:
           - router ospf 1
           - network 192.168.10.0 0.0.0.255 area 0
-        provider:
-          username: ""
-          password: ""
-          host: ""
+          username: "{{ansible_user}}"
+          password: "{{ansible_password}}"
+          host: "{{ansible_host}}"
           authorize: yes
-          auth_pass: ""
           transport: cli
