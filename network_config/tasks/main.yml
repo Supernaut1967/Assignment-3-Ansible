@@ -1,0 +1,40 @@
+- name: Set unique hostnames
+  ios_config:
+    lines:
+      - "hostname {{ inventory_hostname }}"
+  register: hostname_changed
+
+- name: Configure strong local passwords
+  ios_config:
+    lines:
+      - "enable secret {{ strong_password }}"
+      - "username admin secret {{ strong_password }}"
+  notify: restart networking services
+
+- name: Configure SSH and disable Telnet
+  ios_config:
+    lines:
+      - "line vty 0 15"
+      - "transport input ssh"
+  notify: restart networking services
+
+- name: Configure VTY access limitations
+  ios_config:
+    lines:
+      - "line vty 0 15"
+      - "logging synchronous"
+      - "access-class 23 in"
+      - "transport input ssh"
+      - "exec-timeout 30 0"
+      - "login local"
+  notify: restart networking services
+
+- name: Configure logging and timestamps
+  ios_config:
+    lines:
+      - "service timestamps debug datetime msec"
+      - "service timestamps log datetime msec"
+  notify: restart networking services
+
+# Include routing_protocol_setup.yml
+- include_tasks: routing_protocol_setup.yml

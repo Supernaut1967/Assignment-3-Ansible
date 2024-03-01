@@ -1,0 +1,15 @@
+- name: Routing Protocol OSPF Configuration
+  hosts: routers
+  gather_facts: no
+  vars:
+    ansible_connection: network_cli
+  tasks:
+    - name: Set OSPF
+      template:
+        src: templates/routing.j2
+        dest: "~/Documents/Assignment-3-Ansible/{{ inventory_hostname }}_ospf.txt"
+      vars:
+        process_id: 1
+        ospf_network: "192.168.10.0"
+        ospf_network_mask: "0.0.0.255"
+        ospf_area: 0

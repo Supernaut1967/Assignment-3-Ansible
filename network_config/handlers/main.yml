@@ -1,0 +1,7 @@
+---
+# handlers file for network_config
+- name: restart networking services
+  ios_config:
+    lines:
+      - "wr mem"
+
