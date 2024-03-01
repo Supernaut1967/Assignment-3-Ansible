@@ -1,6 +1,8 @@
 - name: Basic Network Setup
   hosts: routers
+  gather_facts: no
   vars:
+    ansible_connection: network_cli
     strong_password: "telecomS144"
 
   tasks:
@@ -15,31 +17,28 @@
         lines:
           - "enable secret {{ strong_password }}"
           - "username admin secret {{ strong_password }}"
-      when: hostname_changed.changed
 
     - name: Configure SSH and disable Telnet
       ios_config:
         lines:
           - "line vty 0 15"
           - "transport input ssh"
-          - "no transport input telnet"
-      when: hostname_changed.changed
+     
 
-    - name: Configure console and VTY access limitations
+    - name: Configure VTY access limitations
       ios_config:
         lines:
-          - "line con 0"
-          - "logging synchronous"
-          - "exec-timeout 5 0"
           - "line vty 0 15"
+          - "logging synchronous"
           - "access-class 23 in"
           - "transport input ssh"
+          - "exec-timeout 30 0"
           - "login local"
-      when: hostname_changed.changed
+
 
     - name: Configure logging and timestamps
       ios_config:
         lines:
           - "service timestamps debug datetime msec"
           - "service timestamps log datetime msec"
-      when: hostname_changed.changed
+      
