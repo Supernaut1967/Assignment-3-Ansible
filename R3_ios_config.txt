@@ -1,0 +1,15 @@
+hostname R3
+enable secret telecomS144
+username admin secret telecomS144
+line vty 0 15
+ transport input ssh
+!
+line vty 0 15
+ logging synchronous
+ access-class 23 in
+ transport input ssh
+ exec-timeout 30 0
+ login local
+!
+service timestamps debug datetime msec
+service timestamps log datetime msec
