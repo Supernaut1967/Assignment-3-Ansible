@@ -4,8 +4,12 @@
   vars:
     ansible_connection: network_cli
   tasks:
-    - name: configure OSPF
-      ios_config:
-        lines:
-          - "router ospf 1"
-          - "network 192.168.10.0 0.0.0.255 area 0"
+    - name: Set OSPF
+      template:
+        src: routing.j2
+        dest: "~/Documents/Assignment-3-Ansible/{{ inventory_hostname }}_ospf.txt"
+      vars:
+        process_id: 1
+        ospf_network: "192.168.10.0"
+        ospf_network_mask: "0.0.0.255"
+        ospf_area: 0

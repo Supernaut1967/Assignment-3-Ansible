@@ -1,0 +1,2 @@
+router ospf {process_id}
+network 192.168.10.0 0.0.0.255 area 0
