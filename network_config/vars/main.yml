@@ -2,3 +2,4 @@
 # vars file for network_config
 ansible_user: admin
 ansible_network_os: ios
+
