@@ -1,0 +1,2 @@
+ansible-vault encrypt_string --name 'ansible_password' 'telecomS144'
+Vault Password: Ansible123!
