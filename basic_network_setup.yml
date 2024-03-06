@@ -1,13 +1,5 @@
 - name: Basic Network Setup
   hosts: routers
+  roles: 
+    - role: network_config
   gather_facts: no
-  vars:
-    ansible_connection: network_cli
-    strong_password: "telecomS144"
-  tasks:
-    - name: Set unique hostnames and generate IOS Configurations
-      template:
-        src: setup.j2
-        dest: "~/Documents/Assignment-3-Ansible/{{ inventory_hostname }}_ios_config.txt"
-      vars:
-        hostname: "{{ inventory_hostname }}"

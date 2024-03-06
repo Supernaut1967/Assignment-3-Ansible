@@ -1,3 +1,7 @@
 ---
 # defaults file for network_config
 strong_password: "telecomS144"
+process_id: 1
+ospf_network: "192.168.10.0"
+ospf_network_mask: "0.0.0.255"
+ospf_area: 0
