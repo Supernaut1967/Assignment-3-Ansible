@@ -1,6 +1,6 @@
 hostname {{ hostname }}
-enable secret {{ strong_password }}
-username admin secret {{ strong_password }}
+enable secret {{ ansible_password }}
+username admin secret {{ ansible_password }}
 line vty 0 15
  transport input ssh
 !
