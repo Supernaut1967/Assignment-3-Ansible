@@ -1,0 +1,3 @@
+- name: restart networking
+  command: /etc/init.d/networking restart
+  notify: restart networking

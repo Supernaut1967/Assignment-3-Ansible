@@ -1,0 +1,9 @@
+- name: Basic Network Setup
+  template:
+    src: setup.j2
+    dest: "~/Documents/Assignment-3-Ansible/{{ inventory_hostname }}_ios_config.txt"
+
+- name: Set OSPF
+  template:
+    src: routing.j2
+    dest: "~/Documents/Assignment-3-Ansible/{{ inventory_hostname }}_ospf.txt"
